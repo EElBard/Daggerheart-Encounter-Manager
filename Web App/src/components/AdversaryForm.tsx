@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card } from './ui/card';
-import { Slider } from '@radix-ui/react-slider';
+import { Slider } from './ui/slider';
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
@@ -88,7 +88,7 @@ export function AdversaryForm() {
         <Card className='max-w-md mx-auto p-6 mt-5'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    
+                    <h1>Create a New Adversary</h1>
                     <FormField 
                         control={form.control}
                         name="name"
@@ -112,7 +112,7 @@ export function AdversaryForm() {
                             <FormItem>
                                 <FormLabel>Tier</FormLabel>
                                 <FormControl>
-                                    <NumberCounter {...field} />
+                                    <NumberCounter {...field} min={1} max={4}/>
                                 </FormControl>
                                 <FormDescription>
                                 </FormDescription>
@@ -160,13 +160,14 @@ export function AdversaryForm() {
                         name="difficulty"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Difficulty</FormLabel>
+                                <FormLabel>Difficulty: {(field.value)}</FormLabel>
                                 <FormControl>
                                     <Slider
                                         defaultValue={[10]}
                                         max={25}
                                         step={1}
-                                        {...field}
+                                        value={[field.value]}
+                                        onValueChange={field.onChange}
                                     />
                                 </FormControl>
                                 <FormDescription>
