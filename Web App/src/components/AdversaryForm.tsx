@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select"
 import { Card } from './ui/card';
 import { Slider } from './ui/slider';
+import { toast } from './ui/sonner';
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
@@ -80,8 +81,9 @@ export function AdversaryForm() {
 
     // 2. Submit Handler
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await pb.collection('adversaries').create(values)
+        const record = await pb.collection('adversaries').create(values)
         .then(() => form.reset())
+        .then(() => toast())
     }
 
     return (
