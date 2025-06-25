@@ -25,7 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Card } from './ui/card';
 import { Slider } from './ui/slider';
 import { toast } from 'sonner';
 import { Textarea } from './ui/textarea';
@@ -259,6 +258,28 @@ return (<>
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Max HP: {(field.value)}</FormLabel>
+                            <FormControl>
+                                <Slider
+                                    defaultValue={[10]}
+                                    max={25}
+                                    step={1}
+                                    value={[field.value]}
+                                    onValueChange={field.onChange}
+                                />
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="max_stress"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Max Stress: {(field.value)}</FormLabel>
                             <FormControl>
                                 <Slider
                                     defaultValue={[10]}
