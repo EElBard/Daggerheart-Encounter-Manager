@@ -28,6 +28,7 @@ import {
 import { Slider } from './ui/slider';
 import { toast } from 'sonner';
 import { Textarea } from './ui/textarea';
+import { AdversaryFeatureForm } from './AdversaryFeatureForm';
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
@@ -390,6 +391,8 @@ return (<>
                 />
 
                 </div>
+
+                <AdversaryFeatureForm />
                 
                 <Button type="submit">Submit</Button>
             </form>
