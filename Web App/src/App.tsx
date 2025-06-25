@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Toaster />
-      <Card className='max-w-md mx-auto p-6 mt-5'>
+      <Card className='max-w-lg mx-auto p-6 mt-5'>
         <AdversaryForm />
       </Card>
     </>

@@ -105,7 +105,7 @@ export default function NumberCounter({
         onClick={handleDecrement}
         disabled={disabled || (numericValueForLogic !== null && numericValueForLogic <= min)}
         aria-label="Decrease value"
-        className="h-10 w-10 shrink-0 bg-white text-gray-900 hover:bg-gray-50"
+        className="h-5 w-5 shrink-0 bg-white text-gray-900 hover:bg-gray-50"
       >
         <Minus className="h-4 w-4" />
       </Button>
@@ -117,7 +117,7 @@ export default function NumberCounter({
         onChange={handleInputChange}
         onBlur={handleInputBlur} 
         disabled={disabled}
-        className="h-10 w-20 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" // Tailwind for hiding default number input arrows
+        className="h-10 w-10 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" // Tailwind for hiding default number input arrows
         aria-label="Number input"
       />
 
@@ -128,7 +128,7 @@ export default function NumberCounter({
         onClick={handleIncrement}
         disabled={disabled || (numericValueForLogic !== null && numericValueForLogic >= max)}
         aria-label="Increase value"
-        className="h-10 w-10 shrink-0 bg-white text-gray-900 hover:bg-gray-50"
+        className="h-5 w-5 shrink-0 bg-white text-gray-900 hover:bg-gray-50"
       >
         <Plus className="h-4 w-4" />
       </Button>
