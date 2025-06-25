@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react" // Import useEffect
 import { Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "./ui/input"
 
 interface NumberCounterProps {
-  value?: number
-  onChange?: (value: number) => void
+  value?: number | null 
+  onChange?: (value: number | null) => void 
   min?: number
   max?: number
   step?: number
@@ -22,54 +22,79 @@ export default function NumberCounter({
   disabled = false,
   className = "",
 }: NumberCounterProps) {
-  const [internalValue, setInternalValue] = useState(0)
+  // Use a string for internal state to accommodate blank input
+  const [internalInput, setInternalInput] = useState<string>(
+    controlledValue !== undefined && controlledValue !== null
+      ? String(controlledValue)
+      : ""
+  )
 
-  // Use controlled value if provided, otherwise use internal state
-  const value = controlledValue !== undefined ? controlledValue : internalValue
-
-  const updateValue = (newValue: number) => {
-    // Ensure the new value stays within min/max bounds
-    const clampedValue = Math.min(Math.max(newValue, min), max);
-    if (onChange) {
-      onChange(clampedValue)
+  // Effect to sync internalInput with controlledValue when it changes externally
+  useEffect(() => {
+    if (controlledValue !== undefined && controlledValue !== null) {
+      setInternalInput(String(controlledValue))
     } else {
-      setInternalValue(clampedValue)
+      setInternalInput("")
+    }
+  }, [controlledValue])
+
+  const parseAndClamp = (inputValue: string): number | null => {
+    const parsedValue = parseInt(inputValue, 10)
+    if (isNaN(parsedValue)) {
+      return null
+    }
+    return Math.min(Math.max(parsedValue, min), max)
+  }
+
+  const emitChange = (newValue: number | null) => {
+    if (onChange) {
+      onChange(newValue)
     }
   }
 
   const handleIncrement = () => {
-    const newValue = Math.min(value + step, max)
-    if (onChange) {
-      onChange(newValue)
-    } else {
-      setInternalValue(newValue)
-    }
+    const currentValue = parseAndClamp(internalInput) || 0 // Default to 0 if blank
+    const newValue = Math.min(currentValue + step, max)
+    setInternalInput(String(newValue))
+    emitChange(newValue)
   }
 
   const handleDecrement = () => {
-    const newValue = Math.max(value - step, min)
-    if (onChange) {
-      onChange(newValue)
-    } else {
-      setInternalValue(newValue)
-    }
+    const currentValue = parseAndClamp(internalInput) || 0 // Default to 0 if blank
+    const newValue = Math.max(currentValue - step, min)
+    setInternalInput(String(newValue))
+    emitChange(newValue)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(e.target.value, 10);
-    // Only update if it's a valid number, otherwise keep the old value or handle error
-    if (!isNaN(newValue)) {
-      updateValue(newValue);
+    const inputValue = e.target.value
+    setInternalInput(inputValue) // Always update internal input state
+    
+    // Only emit a number if it's a valid, parseable number
+    const newValue = parseAndClamp(inputValue)
+    emitChange(newValue)
+  }
+
+  const handleInputBlur = () => {
+    const newValue = parseAndClamp(internalInput)
+    if (newValue === null) {
+      // If after blurring, the input is not a number, set it to blank
+      // or to a default (e.g., min) if you prefer.
+      // For now, we'll keep it blank if it's not a number.
+      setInternalInput("") 
+      emitChange(null)
+    } else {
+      // If it's a valid number, clamp it and update
+      setInternalInput(String(newValue))
+      emitChange(newValue)
     }
   }
 
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const newValue = parseInt(e.target.value, 10);
-    if (isNaN(newValue)) {
-        // If the input is not a number, revert to the last valid value
-        updateValue(value);
-    }
-  };
+  // Determine the displayed value for the input field
+  const displayValue = internalInput
+
+  // Determine the actual number value for increment/decrement logic and button disabling
+  const numericValueForLogic = parseAndClamp(internalInput)
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
@@ -78,7 +103,7 @@ export default function NumberCounter({
         variant="outline"
         size="icon"
         onClick={handleDecrement}
-        disabled={disabled || value <= min}
+        disabled={disabled || (numericValueForLogic !== null && numericValueForLogic <= min)}
         aria-label="Decrease value"
         className="h-10 w-10 shrink-0 bg-white text-gray-900 hover:bg-gray-50"
       >
@@ -87,13 +112,10 @@ export default function NumberCounter({
 
       {/* Input for the value */}
       <Input
-        type="number"
-        value={value}
+        type="text" 
+        value={displayValue}
         onChange={handleInputChange}
-        onBlur={handleInputBlur} // Optional: handle blur for validation/reformatting
-        min={min} // Set min attribute for native input validation
-        max={max} // Set max attribute for native input validation
-        step={step} // Set step attribute
+        onBlur={handleInputBlur} 
         disabled={disabled}
         className="h-10 w-20 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" // Tailwind for hiding default number input arrows
         aria-label="Number input"
@@ -104,7 +126,7 @@ export default function NumberCounter({
         variant="outline"
         size="icon"
         onClick={handleIncrement}
-        disabled={disabled || value >= max}
+        disabled={disabled || (numericValueForLogic !== null && numericValueForLogic >= max)}
         aria-label="Increase value"
         className="h-10 w-10 shrink-0 bg-white text-gray-900 hover:bg-gray-50"
       >

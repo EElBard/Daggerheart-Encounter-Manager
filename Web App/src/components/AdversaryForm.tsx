@@ -295,6 +295,26 @@ return (<>
                         </FormItem>
                     )}
                 />
+
+                <div id="attack_details" className='flex'>
+
+                <FormField 
+                    control={form.control}
+                    name="atk_mod"
+                    render={({ field }) => (
+                        <FormItem className='flex'>
+                            <FormLabel>Attack</FormLabel>
+                            <FormControl>
+                                <NumberCounter {...field} max={25} min={-25}/>
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                </div>
                 
                 <Button type="submit">Submit</Button>
             </form>
