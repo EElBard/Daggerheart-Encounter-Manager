@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select"
 import { Card } from './ui/card';
 import { Slider } from './ui/slider';
-import { toast } from './ui/sonner';
+import { toast } from 'sonner';
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
@@ -67,10 +67,12 @@ export function AdversaryForm() {
         defaultValues: {
             name: "",
             // image: idk,
-            tier: 0,
+            tier: 1,
             type: "Standard",
-            difficulty: 0,
-            max_hp: 0,
+            difficulty: 10,
+            major_threshold: 5,
+            severe_threshold: 10,
+            max_hp: 5,
             max_stress: 0,
             atk_mod: 0,
             atk_name: "",
@@ -83,10 +85,10 @@ export function AdversaryForm() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const record = await pb.collection('adversaries').create(values)
         .then(() => form.reset())
-        .then(() => toast())
+        .then(() => toast("This adversary has been successfully created."))
     }
 
-    return (
+    return (<>
         <Card className='max-w-md mx-auto p-6 mt-5'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -178,10 +180,32 @@ export function AdversaryForm() {
                             </FormItem>
                         )}
                     />
+
+                    <FormField 
+                        control={form.control}
+                        name="max_hp"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Max HP: {(field.value)}</FormLabel>
+                                <FormControl>
+                                    <Slider
+                                        defaultValue={[10]}
+                                        max={25}
+                                        step={1}
+                                        value={[field.value]}
+                                        onValueChange={field.onChange}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     
                     <Button type="submit">Submit</Button>
                 </form>
             </Form>
         </Card>
-    )
+    </>)
 }
