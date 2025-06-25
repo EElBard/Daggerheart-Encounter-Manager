@@ -203,27 +203,41 @@ export function AdversaryForm() {
                         )}
                     />
 
-                    <FormField 
-                        control={form.control}
-                        name="max_hp"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Max HP: {(field.value)}</FormLabel>
-                                <FormControl>
-                                    <Slider
-                                        defaultValue={[10]}
-                                        max={25}
-                                        step={1}
-                                        value={[field.value]}
-                                        onValueChange={field.onChange}
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <div id='thresholds' className='flex justify-between'>
+
+                        <FormField 
+                            control={form.control}
+                            name="major_threshold"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className='justify-center'>Major Threshold</FormLabel>
+                                    <FormControl>
+                                        <NumberCounter {...field} min={0} max={30}/>
+                                    </FormControl>
+                                    <FormDescription>
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField 
+                            control={form.control}
+                            name="severe_threshold"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className='justify-center'>Severe Threshold</FormLabel>
+                                    <FormControl>
+                                        <NumberCounter {...field} min={0} max={30}/>
+                                    </FormControl>
+                                    <FormDescription>
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                    </div>
                     
                     <Button type="submit">Submit</Button>
                 </form>
