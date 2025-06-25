@@ -29,6 +29,10 @@ import { Slider } from './ui/slider';
 import { toast } from 'sonner';
 import { Textarea } from './ui/textarea';
 import { AdversaryFeatureForm } from './AdversaryFeatureForm';
+import { Card } from './ui/card';
+
+import React, {useState } from 'react'
+
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
@@ -97,6 +101,19 @@ export function AdversaryForm() {
         const record = await pb.collection('adversaries').create(values)
         .then(() => form.reset())
         .then(() => toast("This adversary has been successfully created."))
+    }
+
+    // 3. AdversaryFeatureForm Handlers
+    const [showAdversaryFeatureForm, setShowAdversaryFeatureForm] = useState(false);
+
+    const handleAddFeatureClick = (event: React.MouseEvent) => {
+        event.preventDefault()
+        setShowAdversaryFeatureForm(true)
+    }
+
+    const handleFeatureAdded = () => {
+        setShowAdversaryFeatureForm(false)
+        toast("Adversary Feature added successfully!")
     }
 
 return (<>
@@ -392,7 +409,19 @@ return (<>
 
                 </div>
 
-                <AdversaryFeatureForm />
+
+                <Button type="button" className='flex flex-col' onClick={handleAddFeatureClick}>
+                    Add Adversary Feature
+                </Button>
+
+                {showAdversaryFeatureForm && (
+                    <Card>
+                        <div className='mx-5'>
+                            <AdversaryFeatureForm onFeatureAdded={handleFeatureAdded}/>
+                        </div>
+                    </Card>
+                )}
+                
                 
                 <Button type="submit">Submit</Button>
             </form>

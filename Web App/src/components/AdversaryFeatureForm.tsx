@@ -42,7 +42,11 @@ const formSchema = z.object({
     desc: z.coerce.string()
 })
 
-export function AdversaryFeatureForm() {
+interface AdversaryFeatureFormProps {
+    onFeatureAdded: () => void
+}
+
+export function AdversaryFeatureForm({ onFeatureAdded }: AdversaryFeatureFormProps) {
     // 1. Form Definition
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -58,8 +62,8 @@ export function AdversaryFeatureForm() {
     // 2. Submit Handler
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const record = await pb.collection('adversary_features').create(values)
+        .then((res) => toast(JSON.stringify(res)))
         .then(() => form.reset())
-        .then(() => toast("Adversary Feature successfully created."))
     }
 
     return (<>
@@ -80,6 +84,8 @@ export function AdversaryFeatureForm() {
                         </FormItem>
                     )}
                 />
+
+                <Button type='submit'>Submit</Button>
             </form>
         </Form>
     </>)
