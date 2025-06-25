@@ -202,6 +202,28 @@ export function AdversaryForm() {
                             </FormItem>
                         )}
                     />
+
+                    <FormField 
+                        control={form.control}
+                        name="max_hp"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Max HP: {(field.value)}</FormLabel>
+                                <FormControl>
+                                    <Slider
+                                        defaultValue={[10]}
+                                        max={25}
+                                        step={1}
+                                        value={[field.value]}
+                                        onValueChange={field.onChange}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     
                     <Button type="submit">Submit</Button>
                 </form>
