@@ -28,12 +28,15 @@ import {
 import { Card } from './ui/card';
 import { Slider } from './ui/slider';
 import { toast } from 'sonner';
+import { Textarea } from './ui/textarea';
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
 const formSchema = z.object({
     name: z.coerce.string().min(1),
     // image: z.file().min(1).max(1024 * 1024).mimeType("image/png"),
+    desc: z.coerce.string().optional(),
+    motives_tactics: z.coerce.string(),
     tier: z.coerce.number().int().min(1).max(4),
     type: z.enum([
         "Bruiser",
@@ -67,6 +70,8 @@ export function AdversaryForm() {
         defaultValues: {
             name: "",
             // image: idk,
+            desc: "",
+            motives_tactics: "",
             tier: 1,
             type: "Standard",
             difficulty: 10,
@@ -101,6 +106,38 @@ export function AdversaryForm() {
                                 <FormLabel>Adversary Name</FormLabel>
                                 <FormControl>
                                     <Input placeholder="Giant Scorpion" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField 
+                        control={form.control}
+                        name="desc"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Description</FormLabel>
+                                <FormControl>
+                                    <Textarea className="resize-none" placeholder="A human-sized insect with tearing claws and a stinging tail." {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField 
+                        control={form.control}
+                        name="motives_tactics"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Motives & Tactics</FormLabel>
+                                <FormControl>
+                                    <Input className="resize-none" placeholder="Ambush, feed, grapple, poison" {...field} />
                                 </FormControl>
                                 <FormDescription>
                                 </FormDescription>
@@ -181,28 +218,6 @@ export function AdversaryForm() {
                         )}
                     />
 
-                    <FormField 
-                        control={form.control}
-                        name="max_hp"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Max HP: {(field.value)}</FormLabel>
-                                <FormControl>
-                                    <Slider
-                                        defaultValue={[10]}
-                                        max={25}
-                                        step={1}
-                                        value={[field.value]}
-                                        onValueChange={field.onChange}
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
                     <div id='thresholds' className='flex justify-between'>
 
                         <FormField 
@@ -238,6 +253,28 @@ export function AdversaryForm() {
                         />
 
                     </div>
+
+                    <FormField 
+                        control={form.control}
+                        name="max_hp"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Max HP: {(field.value)}</FormLabel>
+                                <FormControl>
+                                    <Slider
+                                        defaultValue={[10]}
+                                        max={25}
+                                        step={1}
+                                        value={[field.value]}
+                                        onValueChange={field.onChange}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     
                     <Button type="submit">Submit</Button>
                 </form>
