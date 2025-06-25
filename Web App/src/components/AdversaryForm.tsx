@@ -93,19 +93,140 @@ export function AdversaryForm() {
         .then(() => toast("This adversary has been successfully created."))
     }
 
-    return (<>
-        <Card className='max-w-md mx-auto p-6 mt-5'>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <h1>Create a New Adversary</h1>
+return (<>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <h1>Create a New Adversary</h1>
+                <FormField 
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Adversary Name</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Giant Scorpion" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="desc"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Textarea className="resize-none" placeholder="A human-sized insect with tearing claws and a stinging tail." {...field} />
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="motives_tactics"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Motives & Tactics</FormLabel>
+                            <FormControl>
+                                <Input className="resize-none" placeholder="Ambush, feed, grapple, poison" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="tier"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Tier</FormLabel>
+                            <FormControl>
+                                <NumberCounter {...field} min={1} max={4}/>
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Type</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a type" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="Bruiser">Bruiser</SelectItem>
+                                    <SelectItem value="Colossus">Colossus</SelectItem>
+                                    <SelectItem value="Colossus Segment">Colossus Segment</SelectItem>
+                                    <SelectItem value="Horde">Horde</SelectItem>
+                                    <SelectItem value="Leader">Leader</SelectItem>
+                                    <SelectItem value="Minion">Minion</SelectItem>
+                                    <SelectItem value="Ranged">Ranged</SelectItem>
+                                    <SelectItem value="Skulk">Skulk</SelectItem>
+                                    <SelectItem value="Social">Social</SelectItem>
+                                    <SelectItem value="Solo">Solo</SelectItem>
+                                    <SelectItem value="Standard">Standard</SelectItem>
+                                    <SelectItem value="Support">Support</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="difficulty"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Difficulty: {(field.value)}</FormLabel>
+                            <FormControl>
+                                <Slider
+                                    defaultValue={[10]}
+                                    max={25}
+                                    step={1}
+                                    value={[field.value]}
+                                    onValueChange={field.onChange}
+                                />
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <div id='thresholds' className='flex justify-between'>
+
                     <FormField 
                         control={form.control}
-                        name="name"
+                        name="major_threshold"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Adversary Name</FormLabel>
+                                <FormLabel className='justify-center'>Major Threshold</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Giant Scorpion" {...field} />
+                                    <NumberCounter {...field} min={0} max={30}/>
                                 </FormControl>
                                 <FormDescription>
                                 </FormDescription>
@@ -116,12 +237,12 @@ export function AdversaryForm() {
 
                     <FormField 
                         control={form.control}
-                        name="desc"
+                        name="severe_threshold"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Description</FormLabel>
+                                <FormLabel className='justify-center'>Severe Threshold</FormLabel>
                                 <FormControl>
-                                    <Textarea className="resize-none" placeholder="A human-sized insect with tearing claws and a stinging tail." {...field} />
+                                    <NumberCounter {...field} min={0} max={30}/>
                                 </FormControl>
                                 <FormDescription>
                                 </FormDescription>
@@ -130,155 +251,32 @@ export function AdversaryForm() {
                         )}
                     />
 
-                    <FormField 
-                        control={form.control}
-                        name="motives_tactics"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Motives & Tactics</FormLabel>
-                                <FormControl>
-                                    <Input className="resize-none" placeholder="Ambush, feed, grapple, poison" {...field} />
-                                </FormControl>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                </div>
 
-                    <FormField 
-                        control={form.control}
-                        name="tier"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Tier</FormLabel>
-                                <FormControl>
-                                    <NumberCounter {...field} min={1} max={4}/>
-                                </FormControl>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField 
-                        control={form.control}
-                        name="type"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Type</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a type" />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        <SelectItem value="Bruiser">Bruiser</SelectItem>
-                                        <SelectItem value="Colossus">Colossus</SelectItem>
-                                        <SelectItem value="Colossus Segment">Colossus Segment</SelectItem>
-                                        <SelectItem value="Horde">Horde</SelectItem>
-                                        <SelectItem value="Leader">Leader</SelectItem>
-                                        <SelectItem value="Minion">Minion</SelectItem>
-                                        <SelectItem value="Ranged">Ranged</SelectItem>
-                                        <SelectItem value="Skulk">Skulk</SelectItem>
-                                        <SelectItem value="Social">Social</SelectItem>
-                                        <SelectItem value="Solo">Solo</SelectItem>
-                                        <SelectItem value="Standard">Standard</SelectItem>
-                                        <SelectItem value="Support">Support</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField 
-                        control={form.control}
-                        name="difficulty"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Difficulty: {(field.value)}</FormLabel>
-                                <FormControl>
-                                    <Slider
-                                        defaultValue={[10]}
-                                        max={25}
-                                        step={1}
-                                        value={[field.value]}
-                                        onValueChange={field.onChange}
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <div id='thresholds' className='flex justify-between'>
-
-                        <FormField 
-                            control={form.control}
-                            name="major_threshold"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className='justify-center'>Major Threshold</FormLabel>
-                                    <FormControl>
-                                        <NumberCounter {...field} min={0} max={30}/>
-                                    </FormControl>
-                                    <FormDescription>
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField 
-                            control={form.control}
-                            name="severe_threshold"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className='justify-center'>Severe Threshold</FormLabel>
-                                    <FormControl>
-                                        <NumberCounter {...field} min={0} max={30}/>
-                                    </FormControl>
-                                    <FormDescription>
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                    </div>
-
-                    <FormField 
-                        control={form.control}
-                        name="max_hp"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Max HP: {(field.value)}</FormLabel>
-                                <FormControl>
-                                    <Slider
-                                        defaultValue={[10]}
-                                        max={25}
-                                        step={1}
-                                        value={[field.value]}
-                                        onValueChange={field.onChange}
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    
-                    <Button type="submit">Submit</Button>
-                </form>
-            </Form>
-        </Card>
+                <FormField 
+                    control={form.control}
+                    name="max_hp"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Max HP: {(field.value)}</FormLabel>
+                            <FormControl>
+                                <Slider
+                                    defaultValue={[10]}
+                                    max={25}
+                                    step={1}
+                                    value={[field.value]}
+                                    onValueChange={field.onChange}
+                                />
+                            </FormControl>
+                            <FormDescription>
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                
+                <Button type="submit">Submit</Button>
+            </form>
+        </Form>
     </>)
 }
