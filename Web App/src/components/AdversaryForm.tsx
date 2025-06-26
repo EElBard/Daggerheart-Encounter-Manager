@@ -413,18 +413,19 @@ return (<>
                 <Button type="button" className='flex flex-col' onClick={handleAddFeatureClick}>
                     Add Adversary Feature
                 </Button>
-
-                {showAdversaryFeatureForm && (
-                    <Card>
-                        <div className='mx-5'>
-                            <AdversaryFeatureForm onFeatureAdded={handleFeatureAdded}/>
-                        </div>
-                    </Card>
-                )}
                 
                 
                 <Button type="submit">Submit</Button>
             </form>
         </Form>
+
+
+        {showAdversaryFeatureForm && (
+            <Card>
+                <div className='mx-5'>
+                    <AdversaryFeatureForm onFeatureAdded={handleFeatureAdded}/>
+                </div>
+            </Card>
+        )}
     </>)
 }
