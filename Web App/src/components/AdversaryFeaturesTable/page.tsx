@@ -32,7 +32,7 @@ async function getData(): Promise<z.infer<typeof adversaryFeaturesSchema>[]> {
     }
 }
 
-export default function DemoPage() {
+export default function AdvFeaturesPage() {
     const [data, setData] = useState<z.infer<typeof adversaryFeaturesSchema>[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)

@@ -2,10 +2,9 @@
 
 import { type ColumnDef } from "@tanstack/react-table"
 
-import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-const adversarySchema = z.object({
+export const adversarySchema = z.object({
 
     name: z.coerce.string().min(1),
     // image: z.file().min(1).max(1024 * 1024).mimeType("image/png"),
@@ -42,3 +41,62 @@ const adversarySchema = z.object({
     ]),
     atk_dmg: z.coerce.string()
 })
+
+export const columns: ColumnDef<z.infer<typeof adversarySchema>>[] = [
+    {
+        accessorKey: "name",
+        header: "Name"
+    },
+    {
+        accessorKey: "desc",
+        header: "Description"
+    },
+    {
+        accessorKey: "motives_tactics",
+        header: "Motives & Tactics"
+    },
+    {
+        accessorKey: "major_threshold",
+        header: "Major Threshold"
+    },
+    {
+        accessorKey: "severe_threshold",
+        header: "Severe Threshold"
+    },
+    {
+        accessorKey: "atk_mod",
+        header: "Attack Modifier"
+    },
+    {
+        accessorKey: "type",
+        header: "Type"
+    },
+    {
+        accessorKey: "tier",
+        header: "Tier"
+    },
+    {
+        accessorKey: "difficulty",
+        header: "Difficulty"
+    },
+    {
+        accessorKey: "atk_name",
+        header: "Attack Name"
+    },
+    {
+        accessorKey: "atk_range",
+        header: "Attack Range"
+    },
+    {
+        accessorKey: "atk_dmg",
+        header: "Attack Damage"
+    },
+    {
+        accessorKey: "max_hp",
+        header: "Max HP"
+    },
+    {
+        accessorKey: "max_stress",
+        header: "Max Stress"
+    }
+]
