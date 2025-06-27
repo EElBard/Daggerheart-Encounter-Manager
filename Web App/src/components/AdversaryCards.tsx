@@ -23,7 +23,6 @@ export function AdversaryCards({...props}) {
                     requestKey: null
                 }).then()
                 setAdversaries(data)
-                console.log(data)
             } catch (err) {
                 setError(err)
             } finally {
@@ -40,6 +39,10 @@ export function AdversaryCards({...props}) {
         return <div>Error loading adversaries: {error instanceof Error ? error.message : 'Unknown error'}</div>
     }
 
+    function randomGradient() {
+        return 'linear-gradient(145deg, ' + generateRandomHexColor() + ', ' + generateRandomHexColor() + ')';
+    }
+
     return (<>
         <ChromaGrid
             items={adversaries.map((adv) => ({
@@ -47,7 +50,7 @@ export function AdversaryCards({...props}) {
                 title: adv.name,
                 subtitle: adv.desc,
                 borderColor: generateRandomHexColor(),
-                gradient: 'linear-gradient(145deg, #fff, #000)'
+                gradient: randomGradient()
             }))}
             className="max-w-4xl mx-auto mt-5"
             radius={300}
