@@ -1,4 +1,5 @@
 import './App.css'
+import { AdversaryCards } from './components/AdversaryCards'
 import { AdversaryFeatureForm } from './components/AdversaryFeatureForm'
 import AdvFeaturesPage from './components/AdversaryFeaturesTable/page'
 import { AdversaryForm } from './components/AdversaryForm'
@@ -23,6 +24,7 @@ function App() {
         <AdvPage />
       </Card>
     </div>
+    <AdversaryCards />
   </>)
 }
 
