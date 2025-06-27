@@ -9,6 +9,7 @@ import { Toaster } from './components/ui/sonner'
 
 function App() {
   return (<>
+  <AdversaryCards/>
   <div className='flex justify-evenly flex-wrap'>
       <Toaster />
       <Card className='max-w-lg mx-auto p-6 mt-5'>
@@ -23,8 +24,7 @@ function App() {
       <Card className='max-w-lg mx-auto p-6 mt-5'>
         <AdvPage />
       </Card>
-    </div>
-    <AdversaryCards />
+  </div>
   </>)
 }
 
