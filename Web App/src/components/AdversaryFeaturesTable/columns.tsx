@@ -31,6 +31,10 @@ export const columns: ColumnDef<z.infer<typeof adversaryFeaturesSchema>>[] = [
         header: "Name"
     },
     {
+        accessorKey: "desc",
+        header: "Description"
+    },
+    {
         accessorKey: "type",
         header: "Type"
     },
@@ -41,9 +45,5 @@ export const columns: ColumnDef<z.infer<typeof adversaryFeaturesSchema>>[] = [
     {
         accessorKey: "damage_type",
         header: "Damage Type"
-    },
-    {
-        accessorKey: "desc",
-        header: "Description"
     }
 ]

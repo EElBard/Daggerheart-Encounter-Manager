@@ -17,10 +17,10 @@ async function getData(): Promise<z.infer<typeof adversaryFeaturesSchema>[]> {
 
         const rawData = records.map(record => ({
             name: record.name,
-            type: record.type,
+            type: record.type || undefined,
             desc: record.desc,
-            range: record.range,
-            damage_type: record.damage_type
+            range: record.range || undefined,
+            damage_type: record.damage_type || undefined
         }))
 
         const validatedData = z.array(adversaryFeaturesSchema).parse(rawData)

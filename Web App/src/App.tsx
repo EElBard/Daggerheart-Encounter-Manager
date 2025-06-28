@@ -9,21 +9,23 @@ import { Toaster } from './components/ui/sonner'
 
 function App() {
   return (<>
+  <Toaster className='justify-top justify-center'/>
   <AdversaryCards/>
-  <div className='flex justify-evenly flex-wrap'>
-      <Toaster />
+  <div className='flex flex-row justify-evenly'>
       <Card className='max-w-lg mx-auto p-6 mt-5'>
         <AdversaryForm />
       </Card>
       <Card className='max-w-lg mx-auto p-6 mt-5'>
         <AdversaryFeatureForm />
       </Card>
-      <Card className='max-w-lg mx-auto p-6 mt-5'>
-        <AdvFeaturesPage />
-      </Card>
-      <Card className='max-w-lg mx-auto p-6 mt-5'>
-        <AdvPage />
-      </Card>
+      <div className='flex flex-col'>
+        <Card className='max-w-md mx-auto p-6 mt-5'>
+          <AdvFeaturesPage />
+        </Card>
+        <Card className='max-w-md mx-auto p-6 mt-5'>
+          <AdvPage />
+        </Card>
+      </div>
   </div>
   </>)
 }
