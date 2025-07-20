@@ -7,10 +7,11 @@ import AdvPage from './components/AdversaryTable/page'
 import { Card } from './components/ui/card'
 import { Toaster } from './components/ui/sonner'
 
+import { useState } from 'react'
+
 function App() {
   return (<>
   <Toaster className='justify-top justify-center'/>
-  <AdversaryCards/>
   <div className='flex flex-row justify-evenly'>
       <Card className='max-w-lg mx-auto p-6 mt-5'>
         <AdversaryForm />
@@ -27,6 +28,7 @@ function App() {
         </Card>
       </div>
   </div>
+  <AdversaryCards className="flex-auto"/>
   </>)
 }
 
