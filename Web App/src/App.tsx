@@ -1,34 +1,35 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import './App.css'
-import { AdversaryCards } from './components/AdversaryCards'
-import { AdversaryFeatureForm } from './components/AdversaryFeatureForm'
-import AdvFeaturesPage from './components/AdversaryFeaturesTable/page'
-import { AdversaryForm } from './components/AdversaryForm'
-import AdvPage from './components/AdversaryTable/page'
-import { Card } from './components/ui/card'
-import { Toaster } from './components/ui/sonner'
-
-import { useState } from 'react'
+import TestAll from "./pages/TestAll";
+import Adversaries from "./pages/Adversaries";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./components/ui/navigation-menu";
+import CreateAdversary from "./pages/CreateAdversary";
 
 function App() {
   return (<>
-  <Toaster className='justify-top justify-center'/>
-  <div className='flex flex-row justify-evenly'>
-      <Card className='max-w-lg mx-auto p-6 mt-5'>
-        <AdversaryForm />
-      </Card>
-      <Card className='max-w-lg mx-auto p-6 mt-5'>
-        <AdversaryFeatureForm />
-      </Card>
-      <div className='flex flex-col'>
-        <Card className='max-w-md mx-auto p-6 mt-5'>
-          <AdvFeaturesPage />
-        </Card>
-        <Card className='max-w-md mx-auto p-6 mt-5'>
-          <AdvPage />
-        </Card>
-      </div>
-  </div>
-  <AdversaryCards className="flex-auto"/>
+  <Router>
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link to="/">Home</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Adversaries</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/adversaries">List of Adversaries</NavigationMenuLink>
+            <NavigationMenuLink href="/">Adversaries</NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+    <Routes>
+      <Route path="/" element={<TestAll />} />
+      <Route path="/adversaries" element={<Adversaries />} />
+      <Route path="/create-adversary" element={<CreateAdversary />} />
+    </Routes>
+  </Router>
   </>)
 }
 

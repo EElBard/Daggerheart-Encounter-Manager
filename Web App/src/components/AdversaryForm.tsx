@@ -71,10 +71,10 @@ const formSchema = z.object({
 
 interface AdversaryFormProps {
     showFeatureForm: boolean,
-    setShowFeatureForm: () => void,
+    setShowFeatureForm: (arg0: boolean) => void,
 }
 
-export function AdversaryForm( showFeatureForm : AdversaryFormProps, setShowFeatureForm : AdversaryFormProps) {
+export function AdversaryForm({ showFeatureForm, setShowFeatureForm } : AdversaryFormProps) {
     // 1. Form Definition
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -104,8 +104,9 @@ export function AdversaryForm( showFeatureForm : AdversaryFormProps, setShowFeat
         .then(() => toast("This adversary has been successfully created."))
     }
 
+    // 3. Feature Form Handler
     function handleAddFeatureClick() {
-
+        setShowFeatureForm(true)
     }
 
 return (<>
