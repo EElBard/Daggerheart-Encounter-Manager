@@ -4,6 +4,7 @@ import TestAll from "./pages/TestAll";
 import Adversaries from "./pages/Adversaries";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./components/ui/navigation-menu";
 import CreateAdversary from "./pages/CreateAdversary";
+import EncounterCreatorPage from "./pages/EncounterCreatorPage";
 
 function App() {
   return (<>
@@ -23,12 +24,19 @@ function App() {
             <NavigationMenuLink href="/create-adversary">Create Adversary</NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Encounters</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/encounter-creator">Encounter Creator</NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
     <Routes>
       <Route path="/" element={<TestAll />} />
       <Route path="/adversaries" element={<Adversaries />} />
       <Route path="/create-adversary" element={<CreateAdversary />} />
+      <Route path="/create-encounter" element={<EncounterCreatorPage />} />
     </Routes>
   </Router>
   </>)
