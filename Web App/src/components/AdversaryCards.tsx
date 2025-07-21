@@ -51,7 +51,7 @@ export function AdversaryCards({...props}) {
     return (<>
         <ChromaGrid
             items={adversaries.map((adv) => ({
-                image: adv.image ? (`http://localhost:8090/api/files/${adv.collectionId}/${adv.id}/${adv.image}`) : placeholder,
+                image: adv.image ? (`${pbURL}/api/files/${adv.collectionId}/${adv.id}/${adv.image}`) : placeholder,
                 title: adv.name,
                 subtitle: adv.desc,
                 borderColor: generateRandomHexColor(),

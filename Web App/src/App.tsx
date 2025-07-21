@@ -20,6 +20,7 @@ function App() {
           <NavigationMenuContent>
             <NavigationMenuLink href="/adversaries">List of Adversaries</NavigationMenuLink>
             <NavigationMenuLink href="/">Adversaries</NavigationMenuLink>
+            <NavigationMenuLink href="/create-adversary">Create Adversary</NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>

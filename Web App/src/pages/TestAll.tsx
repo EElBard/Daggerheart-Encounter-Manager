@@ -11,8 +11,6 @@ function TestAll() {
   <Toaster className='justify-top justify-center'/>
   <div className='flex flex-row justify-evenly'>
       <Card className='max-w-lg mx-auto p-6 mt-5'>
-      </Card>
-      <Card className='max-w-lg mx-auto p-6 mt-5'>
         <AdversaryFeatureForm />
       </Card>
       <div className='flex flex-col'>
