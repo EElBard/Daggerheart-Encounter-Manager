@@ -2,8 +2,9 @@ import ChromaGrid from "./ui/chroma-grid"
 import PocketBase, { type RecordModel } from "pocketbase"
 import placeholder from "@/assets/placeholder.png"
 import { useEffect, useState } from "react"
+import { pbURL } from "@/constants"
 
-const pb = new PocketBase('http://127.0.0.1:8090')
+const pb = new PocketBase(pbURL)
 
 export function AdversaryCards({...props}) {
     const [adversaries, setAdversaries] = useState<RecordModel[]>([])
@@ -43,10 +44,14 @@ export function AdversaryCards({...props}) {
         return 'linear-gradient(145deg, ' + generateRandomHexColor() + ', ' + generateRandomHexColor() + ')';
     }
 
+    function handleCardClick(adversary: RecordModel) {
+
+    }
+
     return (<>
         <ChromaGrid
             items={adversaries.map((adv) => ({
-                image: adv.image || placeholder,
+                image: adv.image ? (`http://localhost:8090/api/files/${adv.collectionId}/${adv.id}/${adv.image}`) : placeholder,
                 title: adv.name,
                 subtitle: adv.desc,
                 borderColor: generateRandomHexColor(),
