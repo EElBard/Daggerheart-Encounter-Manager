@@ -27,7 +27,7 @@ function App() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Encounters</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <NavigationMenuLink href="/encounter-creator">Encounter Creator</NavigationMenuLink>
+            <NavigationMenuLink href="/create-encounter">Encounter Creator</NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
