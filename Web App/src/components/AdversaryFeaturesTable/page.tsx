@@ -8,12 +8,21 @@ import { z } from "zod"
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
-async function getData(): Promise<z.infer<typeof adversaryFeaturesSchema>[]> {
+async function getData( adv: string ): Promise<z.infer<typeof adversaryFeaturesSchema>[]> {
     try {
-        const records = await pb.collection('adversary_features').getFullList({
-            sort: 'name',
-            requestKey: null
-        })
+        var records
+        if (!adv) {
+            records = await pb.collection('adversary_features').getFullList({
+                sort: 'name',
+                requestKey: null
+            })
+        } else {
+            records = await pb.collection('adversary_features').getFullList({
+                filter: `id = ${adv}`,
+                sort: 'name',
+                requestKey: null
+            })
+        }
 
         const rawData = records.map(record => ({
             name: record.name,
@@ -32,7 +41,11 @@ async function getData(): Promise<z.infer<typeof adversaryFeaturesSchema>[]> {
     }
 }
 
-export default function AdvFeaturesPage() {
+type AdvFeaturesPageProps = {
+    adv: string;
+};
+
+export default function AdvFeaturesPage({adv} : AdvFeaturesPageProps) {
     const [data, setData] = useState<z.infer<typeof adversaryFeaturesSchema>[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -42,7 +55,7 @@ export default function AdvFeaturesPage() {
             try {
                 setLoading(true)
                 setError(null)
-                const fetchedData = await getData()
+                const fetchedData = await getData(adv)
                 setData(fetchedData)
             } catch (err: any) {
                 setError(err.message || "An unknown error occurred.")

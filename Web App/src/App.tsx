@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import './App.css'
 import TestAll from "./pages/TestAll";
 import Adversaries from "./pages/Adversaries";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./components/ui/navigation-menu";
 import CreateAdversary from "./pages/CreateAdversary";
 import EncounterCreatorPage from "./pages/EncounterCreatorPage";
+import AdvFeaturesPage from "./components/AdversaryFeaturesTable/page";
+import { AdversaryCards } from "./components/AdversaryCards";
+import AdversaryCardsPage from "./pages/AdversaryCardsPage";
 
 function App() {
   return (<>
@@ -19,9 +21,18 @@ function App() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Adversaries</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <NavigationMenuLink href="/adversaries">List of Adversaries</NavigationMenuLink>
-            <NavigationMenuLink href="/">Adversaries</NavigationMenuLink>
-            <NavigationMenuLink href="/create-adversary">Create Adversary</NavigationMenuLink>
+            <NavigationMenuLink asChild>
+              <Link to="/adversaries">List of Adversaries</Link>
+            </NavigationMenuLink>
+            <NavigationMenuLink asChild>
+              <Link to="/adversary-features">List of Adversary Features</Link>
+            </NavigationMenuLink>
+            <NavigationMenuLink asChild>
+              <Link to="/adversary-cards">Adversary Cards</Link>
+            </NavigationMenuLink>
+            <NavigationMenuLink asChild>
+              <Link to="/create-adversary">Create Adversary</Link>
+            </NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -34,9 +45,11 @@ function App() {
     </NavigationMenu>
     <Routes>
       <Route path="/" element={<TestAll />} />
+      <Route path="/adversary-cards" element={<AdversaryCardsPage />} />
       <Route path="/adversaries" element={<Adversaries />} />
       <Route path="/create-adversary" element={<CreateAdversary />} />
       <Route path="/create-encounter" element={<EncounterCreatorPage />} />
+      <Route path="/adversary-features" element={<AdvFeaturesPage adv=""/>} />
     </Routes>
   </Router>
   </>)

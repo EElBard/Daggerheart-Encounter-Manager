@@ -2,8 +2,11 @@
 
 import {
     type ColumnDef,
+    type ColumnFiltersState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
+    type SortingState,
     useReactTable
 } from "@tanstack/react-table"
 
@@ -16,6 +19,9 @@ import {
     TableRow
 } from "@/components/ui/table"
 
+import { Input } from "./input"
+import { useState } from "react"
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
@@ -25,13 +31,31 @@ export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
+    const [sorting, setSorting] = useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
     const table = useReactTable({
         data,
         columns,
-        getCoreRowModel: getCoreRowModel()
+        getCoreRowModel: getCoreRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
+        state: {
+            sorting,
+            columnFilters
+        }
     })
 
     return (<>
+        <div className="flex items-center py-4">
+            <Input 
+                placeholder="Filter by name"
+                value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                onChange={(event) => {
+                    table.getColumn("name")?.setFilterValue(event.target.value)
+                }}
+            />
+        </div>
         <div className="rounded-md border">
             <Table>
                 <TableHeader>

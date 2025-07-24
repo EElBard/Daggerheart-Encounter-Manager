@@ -4,6 +4,7 @@ function CreateAdversary() {
     return (<>
         <div className="m-10">
             <AdversaryForm showFeatureForm={false} setShowFeatureForm={() => {}} />
+            
         </div>
     </>)
 }
